@@ -54,10 +54,10 @@ export default function LoginReg() {
             <Form className='Login'>
               <h1>HR DMS</h1>
               <span>
-                <Field type='text' name='username' placeholder='username' />
+                <Field type='text' name='Username' placeholder='Username' />
               </span>
               <span>
-                <Field type='text' name='password' placeholder='Password' />
+                <Field type='text' name='Password' placeholder='Password' />
               </span>
 
               <Button

@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { HOST } from './config';
+import { HOST } from './Host';
 
-export async function employeeretrival() {
+export async function getEmployees() {
   try {
     const response = await axios.get(`${HOST}/employee`);
     return response.data;

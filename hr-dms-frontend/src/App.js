@@ -6,6 +6,7 @@ import SearchHomePage from './pages/SearchHomePage';
 import UploadPage from './pages/UploadPage';
 import UserAdd from './pages/UserAdd';
 import UserViewPage from './pages/UserViewPage';
+import DocViewPage from './pages/SearchResults';
 
 import './App.css';
 
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path='/' element={<LoginReg />} />
           <Route path='/search' element={<SearchHomePage />} />
+          <Route path='/search/results' element={<DocViewPage />} />
           <Route path='/upload' element={<UploadPage />} />
           <Route path='/user' element={<UserViewPage />} />
           <Route path='/user/add' element={<UserAdd />} />
