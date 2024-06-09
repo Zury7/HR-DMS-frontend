@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { HOST } from './config';
+import { HOST } from './Host';
 
  //last change
  export async function login(newLogin) {
@@ -11,3 +11,8 @@ import { HOST } from './config';
       return await Promise.reject('Invalid Username or Password !');
     }
   }
+
+// add user 
+// edit user
+// delete user
+// get user

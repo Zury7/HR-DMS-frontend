@@ -10,3 +10,9 @@ export async function employeeretrival() {
     return await Promise.reject('Failed to get employees list!');
   }
 }
+
+
+// get employee details
+// get employee id
+// 
+

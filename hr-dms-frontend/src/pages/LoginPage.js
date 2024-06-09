@@ -3,11 +3,17 @@ import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 //import the function from '../api/Authentication';
-import { login } from '../api/Login';
+import { login } from '../apis/User';
 import * as Yup from 'yup';
 
 // Use this instead https://github.com/jannikbuschke/formik-antd
 export default function LoginReg() {
+  // return (
+  //   <div>
+  //     <h1>HR DMS</h1>
+  //     <h2>Login Page</h2>
+  //   </div>
+  // );
   const LoginRegSchema = Yup.object().shape({
     username: Yup.string().required(),
     password: Yup.string().required(),
