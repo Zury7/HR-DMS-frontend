@@ -1,104 +1,63 @@
-.Login {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.user-view-page--table{
+  margin: 15px;
+}
+
+.user-view-page--update-button{
+  margin-right: 15px;
+}
+
+.search-container{
+  margin: 15px;
+
+}
+
+.search-document--edit-button{
+  margin-right: 15px;
+}
+
+.search--edit-button{
+  margin-right: 15px;
+}
+
+.document--upload-form{
   justify-content: center;
-  margin: 20px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  width: 300px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  align-items: center;
+
 }
 
-.Login h1 {
-  margin-bottom: 20px;
-  font-size: 24px;
-  color: #333;
+.user--registration-form{
+  justify-content: center;
+  align-items: center;
 }
 
-.Login span {
-  display: block;
-  margin-bottom: 10px;
+.login-form{
+  margin-top: 25vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.Login input {
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.login--submit {
-  width: 100%;
-  padding: 10px;
-  margin-top: 20px;
-  background-color: #007bff;
-  border: none;
+.sider-title {
+  padding: 16px;
   color: white;
-  border-radius: 4px;
-  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
 }
 
-.login--submit:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+.header-topic {
+  padding: 16px;
+  color: rgb(0, 0, 0);
+  font-size: 18px;
+  font-weight: bold;
 }
 
-.login--errors {
-  margin-top: 20px;
-  color: red;
-  font-size: 14px;
+.dashboad--sider-content{
+  height: 150vh;
+  margin-top: 64px;
 }
-
-.user-view-page {
+.dashboad--header{
+  position: fixed;
+  z-index: 1;
   width: 100%;
-  padding: 20px;
-}
-
-.user-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.table-header {
-  background-color: #f2f2f2;
-}
-
-.user-row {
-  border-bottom: 1px solid #ddd;
-}
-
-.user-row:hover {
-  background-color: #f5f5f5;
-}
-
-.user-first-name,
-.user-last-name,
-.user-email,
-.user-role,
-.user-actions {
-  padding: 15px;
-  text-align: left;
-}
-
-.edit-button,
-.delete-button {
-  margin-right: 10px;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.edit-button {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.delete-button {
-  background-color: #f44336;
-  color: white;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.4);
 }

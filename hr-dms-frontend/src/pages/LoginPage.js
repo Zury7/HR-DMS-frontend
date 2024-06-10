@@ -1,84 +1,58 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { Button } from 'antd';
-import { useNavigate } from 'react-router-dom';
-
-//import the function from '../api/Authentication';
-import { login } from '../apis/User';
-import * as Yup from 'yup';
+import {Card, Form, Input, Button } from 'antd';
 
 // Use this instead https://github.com/jannikbuschke/formik-antd
 export default function LoginReg() {
-  // return (
-  //   <div>
-  //     <h1>HR DMS</h1>
-  //     <h2>Login Page</h2>
-  //   </div>
-  // );
-  const LoginRegSchema = Yup.object().shape({
-    username: Yup.string().required(),
-    password: Yup.string().required(),
-  });
-
-  const navigate = useNavigate();
-  const handleSubmit = (values, { setSubmitting }) => {
-    setSubmitting(true);
-    const user_login = {
-      username: values.username,
-      password: values.password,
-    };
-    // need to add the function 
-    login({ user_login }).then(() => {
-      setSubmitting(false)
-      navigate('/customerPortal')// Need to seperately logged into matching Home Page
-    }).catch(() => {
-      setSubmitting(false)
-      navigate('/customerPortal')
-    }
-    );
+  const onFinish = (values) => {
+    console.log('Received values of form: ', values);
   };
-  return (
-    <div>
-      <Formik
-        initialValues={{
-          username: '',
-          password: '',
-        }}
-        validationSchema={LoginRegSchema}
-        onSubmit={handleSubmit}
-      >
-        {(props) => {
-          const errorInputStyle = {
-            borderColor: 'red',
-          };
-          return (
-            <Form className='Login'>
-              <h1>HR DMS</h1>
-              <span>
-                <Field type='text' name='Username' placeholder='Username' />
-              </span>
-              <span>
-                <Field type='text' name='Password' placeholder='Password' />
-              </span>
 
-              <Button
-                className='login--submit'
-                type='primary'
-                onClick={props.handleSubmit}
-                disabled={props.isSubmitting}
-              >
-                Submit
-              </Button>
-              {Object.values(props.touched).includes(true) &&
-                Object.values(props.errors).length !== 0 && (
-                  <div className='login--errors'>
-                    <ErrorMessage name='username' component='div' />
-                    <ErrorMessage name='password' component='div' />
-                  </div>
-                )}
-            </Form>
-          );
+  const formItemLayout = {
+    labelCol: {
+      span: 6,
+    },
+    wrapperCol: {
+      span: 14,
+    },
+  };
+
+  return (
+    <div className='login-form'>
+      <Card
+        title='Login'
+        style={{
+          margin: '20px',
+          width: '50%',
+          borderRadius: '15px',
+          boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
         }}
-      </Formik>
+      >
+        <Form {...formItemLayout} name='login' onFinish={onFinish}>
+          <Form.Item
+            name='username'
+            label='Username'
+            rules={[{ required: true, message: 'Please input your Username!' }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name='password'
+            label='Password'
+            rules={[{ required: true, message: 'Please input your Password!' }]}
+          >
+            <Input.Password />
+          </Form.Item>
+
+          <Form.Item
+            wrapperCol={{ ...formItemLayout.wrapperCol, offset: 8 }}
+            style={{ display: 'flex', justifyContent: 'center' }}
+          >
+            <Button type='primary' htmlType='submit'>
+              Log in
+            </Button>
+          </Form.Item>
+        </Form>
+      </Card>
     </div>
   );
 }

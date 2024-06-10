@@ -6,7 +6,7 @@ import SearchHomePage from './pages/SearchHomePage';
 import UploadPage from './pages/UploadPage';
 import UserAdd from './pages/UserAdd';
 import UserViewPage from './pages/UserViewPage';
-import DocViewPage from './pages/SearchResults';
+import DashBoard from './pages/DashBoardPage';
 
 import './App.css';
 
@@ -16,11 +16,12 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<LoginReg />} />
-          <Route path='/search' element={<SearchHomePage />} />
-          <Route path='/search/results' element={<DocViewPage />} />
-          <Route path='/upload' element={<UploadPage />} />
-          <Route path='/user' element={<UserViewPage />} />
-          <Route path='/user/add' element={<UserAdd />} />
+          <Route path='/dashboard/*' element={<DashBoard />}>
+            <Route path='search' element={<SearchHomePage />} />
+            <Route path='upload' element={<UploadPage/>} />
+            <Route path='user' element={<UserViewPage />} />
+            <Route path='user/add' element={<UserAdd />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>

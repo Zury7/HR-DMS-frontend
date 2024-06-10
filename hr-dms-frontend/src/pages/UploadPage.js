@@ -1,146 +1,204 @@
-// form for the get deatils of the employee also can upload the document fo the relavenat employee
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { Button } from 'antd';
+import { Card, Button, Form, Input, DatePicker, Select, Upload } from 'antd';
 import { useNavigate } from 'react-router-dom';
-
+import { InboxOutlined, UploadOutlined } from '@ant-design/icons';
 import { uploaddoc } from '../apis/Document';
-import * as Yup from 'yup';
 
-export default function UploadReg() { 
-    const uploadRegSchema = Yup.object().shape({
-        employeeNumber: Yup.string().required(),
-        NIC: Yup.string().required(),
-        institute: Yup.string().required(),
-        honorific: Yup.string().required(),
-        fullName: Yup.string().required(),
-        docIssuedDate: Yup.string().required(),
-        joinedDate: Yup.string().required(),
-        resignedDate: Yup.string().required(),
-        comment: Yup.string().required(),
-        category: Yup.string().required(),
-        uploadYourFile: Yup.string().required(),
-        severity: Yup.string().required(),
-      });
-    
-      const handleSubmit = (values, { setSubmitting }) => {
-        setSubmitting(true);
-        const doc = {
-            employeeNumber: values.employeeNumber,
-            NIC: values.NIC,
-            institute: values.institute,
-            honorific: values.honorific,
-            fullName: values.fullName,
-            docIssuedDate: values.docIssuedDate,
-            joinedDate: values.joinedDate,
-            resignedDate: values.resignedDate,
-            comment: values.comment,
-            category: values.category,
-            uploadYourFile: values.uploadYourFile,
-            severity: values.severity,
-        };
-        uploaddoc({ doc }).then(() => setSubmitting(false));
-      };
-      return (
-<div>
-  <Formik
-    initialValues={{
-      employeeNumber: '',
-      NIC: '',
-      institute: '',
-      honorific: '',
-      fullName: '',
-      docIssuedDate: '',
-      joinedDate: '',
-      resignedDate: '',
-      comment: '',
-      category: '',
-      uploadYourFile: '',
-      severity: '',
-    }}
-    validationSchema={uploadRegSchema}
-    onSubmit={handleSubmit}
-  >
-    {(props) => {
-      const errorInputStyle = {
-        borderColor: 'red',
-      };
-      return (
-        <Form className='doc--upload--form'>
-          <span>
-            <Field
-              type='text'
-              name='employeeNumber'
-              placeholder='Employee Number'
-              style={
-                props.touched.employeeNumber && props.errors.employeeNumber
-                  ? errorInputStyle
-                  : null
-              }
-            />
-          </span>
-          <span>
-            <Field type='text' name='NIC' placeholder='NIC' />
-          </span>
-          <span>
-            <Field type='text' name='Institute' placeholder='Institute' />
-          </span>
-          <span>
-            <Field type='text' name='Honorific' placeholder='Honorific' />
-          </span>
-          <span>
-            <Field type='text' name='FullName' placeholder='Full Name' />
-          </span>
-          <span>
-            <Field type='text' name='DocIssuedDate' placeholder='Doc Issued Date' />
-          </span>
-          <span>
-            <Field type='text' name='JoinedDate' placeholder='Joined Date' />
-          </span>
-          <span>
-            <Field type='text' name='ResignedDate' placeholder='Resigned Date' />
-          </span>
-          <span>
-            <Field type='text' name='Comment' placeholder='Comment' />
-          </span>
-          <span>
-            <Field type='text' name='Category' placeholder='Category' />
-          </span>
-          <span>
-            <Field type='text' name='UploadYourFile' placeholder='Upload Your File' />
-          </span>
-          <span>
-            <Field type='text' name='Severity' placeholder='Severity' />
-          </span>
-          <Button
-            className='doc--upload--form--submit'
-            type='primary'
-            onClick={props.handleSubmit}
-            disabled={props.isSubmitting}
+const { Option } = Select;
+
+export default function UploadReg() {
+  const navigate = useNavigate();
+
+  const onFinish = async (values) => {
+    console.log(values);
+    // const response = await uploaddoc(values);
+    // if (response.status === 200) {
+    //   navigate('/success');
+    // } else {
+    //   navigate('/error');
+    // }
+  };
+
+  const normFile = (e) => {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
+  };
+
+  // add the form layout as filling field under the label
+  const formItemLayout = {
+    labelCol: {
+      span: 6,
+    },
+    wrapperCol: {
+      span: 14,
+    },
+  };
+
+  return (
+    <div className='document--upload-form'>
+      <Card
+        title='Upload Registration'
+        style={{
+          margin: '10px',
+          // width: '50%',
+          borderRadius: '15px',
+          boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        }}
+      >
+        <Form {...formItemLayout} name='upload_reg' onFinish={onFinish}>
+          <Form.Item
+            name='employeeNumber'
+            label='Employee Number'
+            rules={[
+              { required: true, message: 'Please input your Employee Number!' },
+              {
+                pattern: /^[A-Z]{3}[0-9]{3}$/,
+                message: 'Please input a valid Employee Number!',
+              },
+            ]}
           >
-            Submit
-          </Button>
-          {Object.values(props.touched).includes(true) &&
-            Object.values(props.errors).length !== 0 && (
-              <div className='doc--upload--form--errors'>
-                <ErrorMessage name='EmployeeNumber' component='div' />
-                <ErrorMessage name='NIC' component='div' />
-                <ErrorMessage name='Institute' component='div' />
-                <ErrorMessage name='Honorific' component='div' />
-                <ErrorMessage name='FullName' component='div' />
-                <ErrorMessage name='DocIssuedDate' component='div' />
-                <ErrorMessage name='JoinedDate' component='div' />
-                <ErrorMessage name='ResignedDate' component='div' />
-                <ErrorMessage name='Comment' component='div' />
-                <ErrorMessage name='Category' component='div' />
-                <ErrorMessage name='UploadYourFile' component='div' />
-                <ErrorMessage name='Severity' component='div' />
-              </div>
-            )}
-        </Form>
-      );
-    }}
-  </Formik>
-</div>
+            <Input />
+          </Form.Item>
 
-      );
+          <Form.Item
+            name='NIC'
+            label='NIC'
+            rules={[{ required: true, message: 'Please input your NIC!' }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name='institute'
+            label='Institute'
+            rules={[
+              { required: true, message: 'Please select your Institute!' },
+            ]}
+          >
+            <Select>
+              <Option value='institute1'>Institute 1</Option>
+              <Option value='institute2'>Institute 2</Option>
+              // Add more options as needed
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            name='honorific'
+            label='Honorific'
+            rules={[
+              { required: true, message: 'Please input your Honorific!' },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name='fullName'
+            label='Full Name'
+            rules={[
+              { required: true, message: 'Please input your Full Name!' },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name='docIssuedDate'
+            label='Document Issued Date'
+            rules={[
+              {
+                required: true,
+                message: 'Please select the Document Issued Date!',
+              },
+            ]}
+          >
+            <DatePicker />
+          </Form.Item>
+
+          <Form.Item
+            name='joinedDate'
+            label='Joined Date'
+            rules={[
+              { required: true, message: 'Please select your Joined Date!' },
+            ]}
+          >
+            <DatePicker />
+          </Form.Item>
+
+          <Form.Item name='resignedDate' label='Resigned Date'>
+            <DatePicker />
+          </Form.Item>
+
+          <Form.Item
+            name='comment'
+            label='Comment'
+            rules={[{ required: true, message: 'Please input your Comment!' }]}
+          >
+            <Input.TextArea />
+          </Form.Item>
+
+          <Form.Item
+            name='category'
+            label='Category'
+            rules={[
+              { required: true, message: 'Please select your Category!' },
+            ]}
+          >
+            <Select>
+              <Option value='category1'>Category 1</Option>
+              <Option value='category2'>Category 2</Option>
+              // Add more options as needed
+            </Select>
+          </Form.Item>
+
+          <Form.Item label='Dragger'>
+            <Form.Item
+              name='dragger'
+              valuePropName='fileList'
+              getValueFromEvent={normFile}
+              noStyle
+            >
+              <Upload.Dragger name='files' action='/upload.do'>
+                <p className='ant-upload-drag-icon'>
+                  <InboxOutlined />
+                </p>
+                <p className='ant-upload-text'>
+                  Click or drag file to this area to upload
+                </p>
+                <p className='ant-upload-hint'>
+                  Support for a single or bulk upload. Strictly prohibit from
+                  uploading company data or other band files
+                </p>
+              </Upload.Dragger>
+            </Form.Item>
+          </Form.Item>
+
+          <Form.Item
+            name='severity'
+            label='Severity'
+            rules={[
+              { required: true, message: 'Please select your Severity!' },
+            ]}
+          >
+            <Select>
+              <Option value='low'>Low</Option>
+              <Option value='medium'>Medium</Option>
+              <Option value='high'>High</Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            wrapperCol={{ ...formItemLayout.wrapperCol, offset: 8 }}
+            style={{ display: 'flex', justifyContent: 'center' }}
+          >
+            <Button type='primary' htmlType='submit'>
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      </Card>
+    </div>
+  );
 }
