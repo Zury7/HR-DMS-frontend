@@ -79,7 +79,7 @@ export default function DashBoard() {
               <Link to='/dashboard/user'>User</Link>
             </Menu.Item>
             <Menu.Item key='4' icon={<UserAddOutlined />}>
-              <Link to='/dashboard/user/add'>User</Link>
+              <Link to='/dashboard/user/add'>Add User</Link>
             </Menu.Item>
           </Menu>
         </Sider>
