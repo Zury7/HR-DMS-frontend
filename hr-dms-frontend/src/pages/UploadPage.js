@@ -26,7 +26,6 @@ export default function UploadReg() {
     return e?.fileList;
   };
 
-  // add the form layout as filling field under the label
   const formItemLayout = {
     labelCol: {
       span: 6,

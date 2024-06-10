@@ -1,9 +1,8 @@
-import {Card, Form, Input, Button } from 'antd';
+import { Card, Form, Input, Button } from 'antd';
 
-// Use this instead https://github.com/jannikbuschke/formik-antd
 export default function LoginReg() {
   const onFinish = (values) => {
-    console.log('Received values of form: ', values);
+    console.log(values);
   };
 
   const formItemLayout = {

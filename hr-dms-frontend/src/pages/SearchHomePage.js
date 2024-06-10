@@ -5,13 +5,12 @@ import React, { useState, useEffect } from 'react';
 
 import { searchbyid } from '../apis/Document';
 import { getEmployees } from '../apis/Employee';
-import * as Yup from 'yup';
 
 export default function SearchHomePage() {
-
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearch = (value) => {
+    console.log(value);
     setSearchTerm(value);
   };
   // const SearchSchema = Yup.object().shape({

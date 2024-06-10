@@ -2,6 +2,7 @@ import { Card, Form, Input, Button } from 'antd';
 
 export default function UserAdd() {
   const onFinish = (values) => {
+    console.log(values);
     const new_user = {
       mobileNum: values.mobileNum,
       loginEmployeeNum: values.loginEmployeeNum,

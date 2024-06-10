@@ -10,7 +10,6 @@ import {
   LogoutOutlined,
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
-import Search from 'antd/es/transfer/search';
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -28,7 +27,7 @@ export default function DashBoard() {
             padding: 0,
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between', // add this to space out the items
+            justifyContent: 'space-between',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -43,28 +42,31 @@ export default function DashBoard() {
                 color: 'rgba(255, 255, 255, 0.7)',
               }}
             />
-            <h1 style={{ 
-              marginLeft: '10px',
-              color: 'rgba(255, 255, 255, 0.7)' }}>
+            <h1
+              style={{
+                marginLeft: '10px',
+                color: 'rgba(255, 255, 255, 0.7)',
+              }}
+            >
               HR Document Management System
             </h1>
           </div>
           <Button
-            type='default' // change this from 'text' to 'default'
-            icon={<LogoutOutlined />} // use the LogoutOutlined icon
+            type='default'
+            icon={<LogoutOutlined />}
             onClick={() => {
-              /* add your logout logic here */
+              localStorage.removeItem('token');
+              window.location.href = '/';
             }}
             style={{
               fontSize: '16px',
-              marginRight: '20px', // add some space to the right of the button
+              marginRight: '20px',
             }}
           >
             Logout
           </Button>
         </Header>
       </Layout>
-      {/* <div className='dashboad--sider-content'> */}
       <Layout className='dashboad--sider-content'>
         <Sider trigger={null} collapsible collapsed={collapsed}>
           {!collapsed && <div className='sider-title'>DashBoard</div>}
@@ -95,7 +97,6 @@ export default function DashBoard() {
           <Outlet />
         </Content>
       </Layout>
-      {/* </div> */}
       {/* <Layout>
         <Footer style={{ textAlign: 'center' }}>
           HR-DMS ©2021 Created by HR-DMS Team
