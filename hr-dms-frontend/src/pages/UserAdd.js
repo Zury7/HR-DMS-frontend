@@ -1,25 +1,39 @@
-import { Card, Form, Input, Button } from 'antd';
+import { Card, Form, Input, Button, Select } from 'antd';
+import RoleType from '../constants/role.type';
+import PositionType from '../constants/position.type';
+import { adduser, updateuser } from '../apis/User.Service';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 export default function UserAdd() {
+
+  const navigate = useNavigate();
+
   const onFinish = (values) => {
     console.log(values);
-    const new_user = {
-      mobileNum: values.mobileNum,
-      loginEmployeeNum: values.loginEmployeeNum,
+    const newUser = {
+      name: values.name,
       email: values.email,
-      username: values.username,
       password: values.password,
+      mobile: values.mobile,
+      role: values.role,
       responsibleDivision: values.responsibleDivision,
-      userType: values.userType,
     };
 
-    // adduser({ new_user })
-    //   .then(() => {
-    //     navigate('/customerPortal');
-    //   })
-    //   .catch(() => {
-    //     navigate('/customerPortal');
-    //   });
+    adduser(newUser)
+      .then((response) => {
+        console.log(response);
+        if (response.data === 'User already exists.') {
+          toast.error('User already exists use different Email.');
+        } else {
+          toast.success('User Registration was Success !');
+          navigate('/dashboard/user');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error('User Registration was Failed !');
+      });
   };
 
   // add the form layout as filling field under the label
@@ -38,28 +52,15 @@ export default function UserAdd() {
         title='User Registration'
         style={{
           margin: '10px',
-          // width: '50%',
           borderRadius: '15px',
           boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
         }}
       >
         <Form {...formItemLayout} name='user_add' onFinish={onFinish}>
           <Form.Item
-            name='mobileNum'
-            label='Mobile Number'
-            rules={[
-              { required: true, message: 'Please input your Mobile Number!' },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            name='loginEmployeeNum'
-            label='Employee Number'
-            rules={[
-              { required: true, message: 'Please input your Employee Number!' },
-            ]}
+            name='name'
+            label='Name'
+            rules={[{ required: true, message: 'Please input your Name!' }]}
           >
             <Input />
           </Form.Item>
@@ -76,19 +77,36 @@ export default function UserAdd() {
           </Form.Item>
 
           <Form.Item
-            name='username'
-            label='Username'
-            rules={[{ required: true, message: 'Please input your Username!' }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
             name='password'
             label='Password'
             rules={[{ required: true, message: 'Please input your Password!' }]}
           >
             <Input.Password />
+          </Form.Item>
+
+          <Form.Item
+            name='mobile'
+            label='Mobile Number'
+            rules={[
+              { required: true, message: 'Please input your Mobile Number!' },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name='role'
+            label='Role'
+            rules={[{ required: true, message: 'Please select your Role!' }]}
+          >
+            <Select>
+              <Select.Option value={RoleType.ADMIN}>Admin</Select.Option>
+              <Select.Option value={RoleType.SUPER_ADMIN}>
+                Super Admin
+              </Select.Option>
+              <Select.Option value={RoleType.USER}>User</Select.Option>
+              <Select.Option value={RoleType.GUEST}>GUEST</Select.Option>
+            </Select>
           </Form.Item>
 
           <Form.Item
@@ -101,17 +119,34 @@ export default function UserAdd() {
               },
             ]}
           >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            name='userType'
-            label='User Type'
-            rules={[
-              { required: true, message: 'Please input your User Type!' },
-            ]}
-          >
-            <Input />
+            <Select>
+              <Select.Option value={PositionType.ADMIN}>Admin</Select.Option>
+              <Select.Option value={PositionType.HR}>HR</Select.Option>
+              <Select.Option value={PositionType.MANAGER}>
+                Manager
+              </Select.Option>
+              <Select.Option value={PositionType.DEVELOPER}>
+                Developer
+              </Select.Option>
+              <Select.Option value={PositionType.DESIGNER}>
+                Designer
+              </Select.Option>
+              <Select.Option value={PositionType.TESTER}>Tester</Select.Option>
+              <Select.Option value={PositionType.ACCOUNTANT}>
+                Accountant
+              </Select.Option>
+              <Select.Option value={PositionType.MARKETING}>
+                Marketing
+              </Select.Option>
+              <Select.Option value={PositionType.SALES}>Sales</Select.Option>
+              <Select.Option value={PositionType.CUSTOMER_SERVICE}>
+                Customer Service
+              </Select.Option>
+              <Select.Option value={PositionType.PRODUCT}>
+                Product
+              </Select.Option>
+              <Select.Option value={PositionType.OTHERS}>Others</Select.Option>
+            </Select>
           </Form.Item>
 
           <Form.Item

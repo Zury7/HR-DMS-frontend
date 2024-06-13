@@ -9,6 +9,7 @@ import UserViewPage from './pages/UserViewPage';
 import DashBoard from './pages/DashBoardPage';
 
 import './App.css';
+import Notification from './pages/Notification';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      <Notification />
     </div>
   );
 }

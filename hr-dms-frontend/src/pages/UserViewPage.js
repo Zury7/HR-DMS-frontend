@@ -1,119 +1,46 @@
-import React from 'react';
 import { Button, Table } from 'antd';
+import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
-import { updateuser } from '../apis/User';
-import { deleteuser } from '../apis/User';
+import { updateuser, deleteuser, getuser } from '../apis/User.Service';
 
 export default function UserViewPage() {
-  const userArray = [
-    {
-      mobileNumber: '1234567890',
-      employeeNumber: 'EMP001',
-      email: 'john.doe@example.com',
-      username: 'johndoe',
-      responsibleDivision: 'All',
-      userType: 'Admin',
-    },
-    {
-      mobileNumber: '9876543210',
-      employeeNumber: 'EMP002',
-      email: 'jane.doe@example.com',
-      username: 'janedoe',
-      responsibleDivision: 'HR',
-      userType: 'Super User',
-    },
-    {
-      mobileNumber: '8765432109',
-      employeeNumber: 'EMP003',
-      email: 'john.smith@example.com',
-      username: 'johnsmith',
-      responsibleDivision: 'Production',
-      userType: 'User',
-    },
-    {
-      mobileNumber: '7654321098',
-      employeeNumber: 'EMP004',
-      email: 'jane.smith@example.com',
-      username: 'janesmith',
-      responsibleDivision: 'Sales',
-      userType: 'User',
-    },
-    {
-      mobileNumber: '6543210987',
-      employeeNumber: 'EMP005',
-      email: 'john.doe2@example.com',
-      username: 'johndoe2',
-      responsibleDivision: 'Marketing',
-      userType: 'Admin',
-    },
-    {
-      mobileNumber: '5432109876',
-      employeeNumber: 'EMP006',
-      email: 'jane.doe2@example.com',
-      username: 'janedoe2',
-      responsibleDivision: 'Finance',
-      userType: 'Super User',
-    },
-    {
-      mobileNumber: '1234567890',
-      employeeNumber: 'EMP001',
-      email: 'john.doe@example.com',
-      username: 'johndoe',
-      responsibleDivision: 'All',
-      userType: 'Admin',
-    },
-    {
-      mobileNumber: '9876543210',
-      employeeNumber: 'EMP002',
-      email: 'jane.doe@example.com',
-      username: 'janedoe',
-      responsibleDivision: 'HR',
-      userType: 'Super User',
-    },
-    {
-      mobileNumber: '8765432109',
-      employeeNumber: 'EMP003',
-      email: 'john.smith@example.com',
-      username: 'johnsmith',
-      responsibleDivision: 'Production',
-      userType: 'User',
-    },
-    {
-      mobileNumber: '1234567890',
-      employeeNumber: 'EMP001',
-      email: 'john.doe@example.com',
-      username: 'johndoe',
-      responsibleDivision: 'All',
-      userType: 'Admin',
-    },
-    {
-      mobileNumber: '9876543210',
-      employeeNumber: 'EMP002',
-      email: 'jane.doe@example.com',
-      username: 'janedoe',
-      responsibleDivision: 'HR',
-      userType: 'Super User',
-    },
-    {
-      mobileNumber: '8765432109',
-      employeeNumber: 'EMP003',
-      email: 'john.smith@example.com',
-      username: 'johnsmith',
-      responsibleDivision: 'Production',
-      userType: 'User',
-    },
-  ];
+  const [userArray, setUserArray] = useState([]);
+
+  useEffect(() => {
+    getuser()
+      .then((response) => {
+        console.log(response.data.message);
+        setUserArray(response.data.message);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  const handleDelete = (user) => {
+    deleteuser(user)
+      .then((response) => {
+        console.log(response);
+        setUserArray(userArray.filter((u) => u.id !== user.id));
+        toast.success('User Deleted Successfully');
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error('User Deletion Failed');
+      });
+  };
 
   const columns = [
     {
-      title: 'Mobile Number',
-      dataIndex: 'mobileNumber',
-      key: 'mobileNumber',
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
     },
     {
-      title: 'Employee Number',
-      dataIndex: 'employeeNumber',
-      key: 'employeeNumber',
+      title: 'User ID',
+      dataIndex: 'id',
+      key: 'id',
     },
     {
       title: 'Email',
@@ -121,9 +48,9 @@ export default function UserViewPage() {
       key: 'email',
     },
     {
-      title: 'Username',
-      dataIndex: 'username',
-      key: 'username',
+      title: 'Mobile Number',
+      dataIndex: 'mobile',
+      key: 'mobile',
     },
     {
       title: 'Responsible Division',
@@ -131,9 +58,9 @@ export default function UserViewPage() {
       key: 'responsibleDivision',
     },
     {
-      title: 'User Type',
-      dataIndex: 'userType',
-      key: 'userType',
+      title: 'Role',
+      dataIndex: 'role',
+      key: 'role',
     },
     {
       title: 'Actions',
@@ -167,7 +94,7 @@ export default function UserViewPage() {
                   type='primary'
                   danger
                   onClick={() => {
-                    deleteuser(user);
+                    handleDelete(user);
                   }}
                 >
                   Delete

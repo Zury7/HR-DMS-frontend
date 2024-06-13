@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import React, { useState, useEffect } from 'react';
 
-import { searchbyid } from '../apis/Document';
-import { getEmployees } from '../apis/Employee';
+import { searchbyid } from '../apis/Document.Service';
+import { getEmployees } from '../apis/Employee.Service';
 
 export default function SearchHomePage() {
   const [searchTerm, setSearchTerm] = useState('');

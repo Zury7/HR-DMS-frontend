@@ -1,8 +1,14 @@
 import { Card, Form, Input, Button } from 'antd';
+import { login } from '../apis/User.Service';
 
 export default function LoginReg() {
-  const onFinish = (values) => {
-    console.log(values);
+  const onFinish = async (values) => {
+    const credentials = {
+      email: values.email,
+      password: values.password,
+    };
+
+    await login(credentials);
   };
 
   const formItemLayout = {
@@ -27,8 +33,8 @@ export default function LoginReg() {
       >
         <Form {...formItemLayout} name='login' onFinish={onFinish}>
           <Form.Item
-            name='username'
-            label='Username'
+            name='email'
+            label='Email'
             rules={[{ required: true, message: 'Please input your Username!' }]}
           >
             <Input />

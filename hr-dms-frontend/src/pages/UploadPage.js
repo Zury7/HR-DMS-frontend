@@ -1,7 +1,7 @@
 import { Card, Button, Form, Input, DatePicker, Select, Upload } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { InboxOutlined, UploadOutlined } from '@ant-design/icons';
-import { uploaddoc } from '../apis/Document';
+import { uploaddoc } from '../apis/Document.Service';
 
 const { Option } = Select;
 
